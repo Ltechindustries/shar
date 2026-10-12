@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Friends Forever 💗</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: "Trebuchet MS", sans-serif;
+            background: linear-gradient(135deg, #ffe0ec, #ffc2d8, #f8bbd0);
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 25px;
+            animation: floatUp 7s linear infinite;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% { opacity: 0.8; }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            width: min(90%, 450px);
+            padding: 45px 25px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.88);
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(190, 50, 100, 0.2);
+            border: 2px solid white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .emoji {
+            font-size: 65px;
+            margin-bottom: 18px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        h1 {
+            color: #c2185b;
+            font-size: 29px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #ad5277;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            min-height: 55px;
+        }
+
+        button {
+            padding: 14px 32px;
+            font-size: 17px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        #yesBtn {
+            color: white;
+            background: linear-gradient(135deg, #ff4081, #e91e63);
+            box-shadow: 0 5px 15px #f48fb1;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            color: #c2185b;
+            background: #ffe4ed;
+            border: 2px solid #f48fb1;
+            position: fixed;
+            z-index: 10;
+        }
+
+        #message {
+            display: none;
+            margin-top: 25px;
+            color: #d81b60;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1.7;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .celebration {
+            font-size: 35px;
+            margin-top: 12px;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #c77a99;
+            margin-top: 25px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="emoji" id="mainEmoji">💗</div>
+
+        <h1 id="question">
+           Sharmilaaaaaaaaaaaa Will you be my best friend forever?
+        </h1>
+
+        <p id="subtitle">
+            Life is sweeter with you in it! 🌸<br>
+            So, what do you say? 🥹💕
+        </p>
+
+        <div class="buttons" id="buttons">
+            <button id="yesBtn" onclick="sayYes()">Yes 💖</button>
+            <button id="noBtn">No 🙈</button>
+        </div>
+
+        <div id="message">
+            YAYYYYY! 🥹💖<br>
+            Congratulations! 🎉<br>
+            You are officially my Best Friend Forever! 🫶<br>
+            No take-backs! ♾️💕
+            <div class="celebration">💐 💝 🧸 💗</div>
+        </div>
+
+        <p class="hint" id="hint">
+            Psst... there's only one right answer 😉
+        </p>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+
+        function moveNoButton() {
+            const padding = 10;
+
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            const x = Math.max(padding, Math.random() * maxX);
+            const y = Math.max(padding, Math.random() * maxY);
+
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+        }
+
+        // The No button runs away before it can be clicked!
+        noBtn.addEventListener("mouseenter", moveNoButton);
+
+        noBtn.addEventListener("touchstart", function(event) {
+            event.preventDefault();
+            moveNoButton();
+        }, { passive: false });
+
+        noBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            moveNoButton();
+        });
+
+        // Make sure the button stays inside the screen after resizing.
+        window.addEventListener("resize", moveNoButton);
+
+        function sayYes() {
+            document.getElementById("question").textContent =
+                "Best Friends Forever! 💞";
+
+            document.getElementById("subtitle").style.display = "none";
+            document.getElementById("buttons").style.display = "none";
+            document.getElementById("hint").style.display = "none";
+            document.getElementById("mainEmoji").textContent = "🥹💖";
+            document.getElementById("message").style.display = "block";
+
+            // Fill the screen with celebration hearts!
+            for (let i = 0; i < 40; i++) {
+                setTimeout(createHeart, i * 80);
+            }
+        }
+
+        // Floating hearts in the background
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+
+            const hearts = ["💗", "💕", "💖", "💘", "❤️", "💝"];
+            heart.textContent =
+                hearts[Math.floor(Math.random() * hearts.length)];
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration =
+                (4 + Math.random() * 5) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 9000);
+        }
+
+        setInterval(createHeart, 450);
+    </script>
+
+</body>
+</html>
